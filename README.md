@@ -25,33 +25,23 @@ Berbagai penelitian telah memanfaatkan machine learning untuk memprediksi dan me
 8. [Penggunaan Data Mining untuk Prediksi tingkat Obesitas di Meksiko Menggunakan Metode Random Forest, Aini et al. (2024)](https://proceeding.unpkediri.ac.id/index.php/inotek/article/view/5062)
 
 ## Business Understanding
-
-Pada bagian ini, kamu perlu menjelaskan proses klarifikasi masalah.
-
-Bagian laporan ini mencakup:
+Tujuan dari proyek ini adalah untuk mengembangkan model klasifikasi tingkat obesitas berdasarkan data gaya hidup, pola makan, dan kondisi fisik individu menjadi tujuh kelas berbeda yaitu **Insufficient_Weight, Normal_Weight, Overweight_Level_I, Overweight_Level_II, Obesity_Type_I, Obesity_Type_II, dan Obesity_Type_III**. Pembagian ini dibuat untuk memberikan tingkat ketelitian lebih baik, sehingga sistem dapat mendeteksi risiko sejak dini dan menyesuaikan intervensi berdasarkan tingkat keparahan untuk mencegah dampak-dampak buruk akibat obesitas. Disamping itu, ini dilakukan agar pendekatan yang digunakan tidak bersifat umum, melainkan presisi dan personal. Misalnya, individu dengan Overweight_Level_I membutuhkan edukasi gaya hidup, sedangkan Obesity_Type_III membutuhkan penanganan medis lebih serius. Dengan demikian, sistem ini tidak hanya mampu mengidentifikasi kondisi obesitas secara akurat, tetapi juga memberikan manfaat praktis bagi pengambilan keputusan di bidang kesehatan masyarakat. Oleh karena itu, di bawah ini akan dirumuskan beberapa pernyataan masalah yang akan diselesaikan dalam proyek ini:
 
 ### Problem Statements
-
-Menjelaskan pernyataan masalah latar belakang:
-- Pernyataan Masalah 1
-- Pernyataan Masalah 2
-- Pernyataan Masalah n
+1. Bagaimana mengidentifikasi faktor-faktor utama dalam kondisi fisik, gaya hidup dan kebiasaan individu yang berkorelasi dengan tingkat obesitas?
+2. Bagaimana merancang model klasifikasi obesitas berbasis machine learning yang mampu membedakan tujuh kategori tingkat obesitas secara akurat?
+3. Bagaimana mengoptimalkan performa prediksi model agar dapat digunakan sebagai alat bantu deteksi obesitas yang akurat dan efisien?
 
 ### Goals
+1. Mengidentifikasi faktor-faktor yang paling signifikan dan relevan dalam memengaruhi tingkat obesitas melalui analisis korelasi, visualisasi distribusi data, dan teknik statistik eksploratif. Proses ini bertujuan untuk memahami bagaimana variabel tertentu berkaitan dengan tingkat obesitas seseorang.
+2.  Mengembangkan model yang mampu memprediksi tingkat obesitas secara otomatis dan akurat berdasarkan data yang tersedia menggunakan beberapa algoritma optimal serta melakukan perbandingan performa antar model yang telah dibuat untuk pemilihan model terbaik.
+3.  Menentukan baseline model dan menerapkan optimasi hyperparameter tuning pada semua parameter model menggunakan teknik Random Search untuk meningkatkan akurasi dan keandalan prediksi berdasarkan parameter terbaik yang diperoleh. 
 
-Menjelaskan tujuan dari pernyataan masalah:
-- Jawaban pernyataan masalah 1
-- Jawaban pernyataan masalah 2
-- Jawaban pernyataan masalah n
+**Solution Statements**:
+- **Solusi 1:** Menerapkan tahapan Exploratory Data Analysis untuk mengidentifikasi faktor-faktor yang berpengaruh, baik positif dan negatif. Dengan melakukan analisis korelasi antar fitur, visualisasi korelasi ataupun dengan teknik statistik eksploratif. Pada tahapan ini diharapkan semua fitur memiliki pengaruh terhadap tingkat obesitas seseorang agar membuktikan bahwa prediksi memang dipengaruhi berbagai faktor kompleks seperti pada tujuan awal.
+- **Solusi 2:** Menguji coba beberapa algoritma model machine learning, dalam hal ini penelitian akan fokus menggunakan model ensemble yang telah terbukti memiliki akurasi yang baik berdasarkan penelitian terkait yaitu memanfaatkan algoritma Random Forest dan Boosting Algorithm. Kemudian akan dilakukan evaluasi secara menyeluruh menggunakan metrik akurasi sebagai pembanding utama yang mengukur persentase prediksi benar dibandingkan total sampel serta precision, recall, dan F1-Score untuk metrik tambahan. Selain itu digunakan juga classification reports untuk memberikan detail metrik untuk setiap kelas yang diprediksi dan confusion matrix untuk menunjukkan jumlah prediksi benar dan salah untuk setiap kelas. Model dengan hasil evaluasi terbaik akan dipilih sebagai baseline model.
+- **Solusi 3:** Model yang dihasilkan pada tahap modeling belum tentu optimal sehingga perlu dilakukan proses Hyperparameter tuning untuk mendapatkan parameter basemodel yang terbaik sehingga dapat meningkatkan performa model terutama berdasarkan metrik akurasinya  dengan menggunakan teknik Random Search agar mengurangi waktu pencarian parameter optimal. Setelah parameter optimal didapat akan dilakukan training ulang dan dilakukan evaluasi menyeluruh dan jika terbukti meningkatkan akurasi dibandingkan basemodel, maka model dengan parameter hasil fine tuning akan dipilih menjadi model akhir.
 
-Semua poin di atas harus diuraikan dengan jelas. Anda bebas menuliskan berapa pernyataan masalah dan juga goals yang diinginkan.
-
-**Rubrik/Kriteria Tambahan (Opsional)**:
-- Menambahkan bagian “Solution Statement” yang menguraikan cara untuk meraih goals. Bagian ini dibuat dengan ketentuan sebagai berikut: 
-
-    ### Solution statements
-    - Mengajukan 2 atau lebih solution statement. Misalnya, menggunakan dua atau lebih algoritma untuk mencapai solusi yang diinginkan atau melakukan improvement pada baseline model dengan hyperparameter tuning.
-    - Solusi yang diberikan harus dapat terukur dengan metrik evaluasi.
 
 ## Data Understanding
 Paragraf awal bagian ini menjelaskan informasi mengenai data yang Anda gunakan dalam proyek. Sertakan juga sumber atau tautan untuk mengunduh dataset. Contoh: [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Restaurant+%26+consumer+data).
