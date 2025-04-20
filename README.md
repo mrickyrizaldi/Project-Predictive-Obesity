@@ -37,7 +37,7 @@ Tujuan dari proyek ini adalah untuk mengembangkan model klasifikasi tingkat obes
 2.  Mengembangkan model yang mampu memprediksi tingkat obesitas secara otomatis dan akurat berdasarkan data yang tersedia menggunakan beberapa algoritma optimal serta melakukan perbandingan performa antar model yang telah dibuat untuk pemilihan model terbaik.
 3.  Menentukan baseline model dan menerapkan optimasi hyperparameter tuning pada semua parameter model menggunakan teknik Random Search untuk meningkatkan akurasi dan keandalan prediksi berdasarkan parameter terbaik yang diperoleh. 
 
-**Solution Statements**:
+### Solution Statements
 - **Solusi 1:** Menerapkan tahapan Exploratory Data Analysis untuk mengidentifikasi faktor-faktor yang berpengaruh, baik positif dan negatif. Dengan melakukan analisis korelasi antar fitur, visualisasi korelasi ataupun dengan teknik statistik eksploratif. Pada tahapan ini diharapkan semua fitur memiliki pengaruh terhadap tingkat obesitas seseorang agar membuktikan bahwa prediksi memang dipengaruhi berbagai faktor kompleks seperti pada tujuan awal.
 - **Solusi 2:** Menguji coba beberapa algoritma model machine learning, dalam hal ini penelitian akan fokus menggunakan model ensemble yang telah terbukti memiliki akurasi yang baik berdasarkan penelitian terkait yaitu memanfaatkan algoritma Random Forest dan Boosting Algorithm. Kemudian akan dilakukan evaluasi secara menyeluruh menggunakan metrik akurasi sebagai pembanding utama yang mengukur persentase prediksi benar dibandingkan total sampel serta precision, recall, dan F1-Score untuk metrik tambahan. Selain itu digunakan juga classification reports untuk memberikan detail metrik untuk setiap kelas yang diprediksi dan confusion matrix untuk menunjukkan jumlah prediksi benar dan salah untuk setiap kelas. Model dengan hasil evaluasi terbaik akan dipilih sebagai baseline model.
 - **Solusi 3:** Model yang dihasilkan pada tahap modeling belum tentu optimal sehingga perlu dilakukan proses Hyperparameter tuning untuk mendapatkan parameter basemodel yang terbaik sehingga dapat meningkatkan performa model terutama berdasarkan metrik akurasinya  dengan menggunakan teknik Random Search agar mengurangi waktu pencarian parameter optimal. Setelah parameter optimal didapat akan dilakukan training ulang dan dilakukan evaluasi menyeluruh dan jika terbukti meningkatkan akurasi dibandingkan basemodel, maka model dengan parameter hasil fine tuning akan dipilih menjadi model akhir.
@@ -46,46 +46,72 @@ Tujuan dari proyek ini adalah untuk mengembangkan model klasifikasi tingkat obes
 Dataset yang digunakan pada proyek klasifikasi tingkat obesitas ini terdiri dari 2.111 baris data, 17 fitur, dan 1 target berisi 7 kelas yang dikumpulkan dari individu yang berasal dari negara Mexico, Peru, dan Kolombia. Dataset ini mencakup data terkait kebiasaan makan, aktivitas fisik, serta kondisi fisik pengguna. Sekitar 23% data dikumpulkan langsung dari pengguna melalui platform daring, sedangkan 77% lainnya dihasilkan secara sintetis menggunakan teknik oversampling SMOTE melalui Weka. Dataset ini dapat diakses melalui tautan berikut: [Obesity Levels - Kaggle Dataset](https://www.kaggle.com/datasets/fatemehmehrparvar/obesity-levels)
 
 ### Variabel-variabel pada Obesity Levels Dataset adalah sebagai berikut:
-- **Gender**: Jenis kelamin responden (Kategorikal: Male/Female).
-- **Age**: Usia responden dalam tahun (Kontinu).
-- **Height**: Tinggi badan dalam meter (Kontinu).
-- **Weight**: Berat badan dalam kilogram (Kontinu).
-- **family_history_with_overweight**: Riwayat keluarga dengan kelebihan berat badan (Biner: yes/no).
-- **FAVC**: Sering mengonsumsi makanan berkalori tinggi? (Biner: yes/no).
-- **FCVC**: Frekuensi konsumsi sayuran dalam makanan harian (Diskrit: 1-3), angka mungkin mewakili sedikit/tidak ada, sedang dan tinggi.
-- **NCP**: Jumlah makanan utama per hari (Kontinu: 1-4).
-- **CAEC**: Kebiasaan ngemil di antara waktu makan (Kategorikal: no, sometimes, frequently, always).
-- **SMOKE**: Apakah merokok? (Biner: yes/no).
-- **CH2O**: Konsumsi air harian (Kontinu: 1-3 liter).
-- **SCC**: Monitor kalori harian yang dikonsumsi (Biner: yes/no).
-- **FAF**: Frekuensi aktivitas fisik (Kontinu: 0-3), angka mungkin mewakili tidak ada, jarang, sering dan selalu.
-- **TUE**: Waktu yang dihabiskan untuk perangkat teknologi per hari (Diskrit: 0-2), angka mungkin mewakili sedikit/tidak ada, sedang dan tinggi.
-- **CALC**: Frekuensi konsumsi alkohol (Kategorikal: no, sometimes, frequently, always).
-- **MTRANS**: Moda transportasi utama yang digunakan (Kategorikal: Public_Transportation, Walking, Automobile, Motorbike, Bike).
-- **NObeyesdad**: Label target yang menunjukkan tingkat obesitas (Kategorikal: Insufficient_Weight, Normal_Weight, Overweight_Level_I, Overweight_Level_II, Obesity_Type_I, Obesity_Type_II, dan Obesity_Type_III):
+- **Gender**: Jenis kelamin responden `(Kategorikal: Male/Female)`.
+- **Age**: Usia responden dalam tahun `(Kontinu)`.
+- **Height**: Tinggi badan dalam meter `(Kontinu)`.
+- **Weight**: Berat badan dalam kilogram `(Kontinu)`.
+- **family_history_with_overweight**: Riwayat keluarga dengan kelebihan berat badan `(Biner: yes/no)`.
+- **FAVC**: Sering mengonsumsi makanan berkalori tinggi? `(Biner: yes/no)`.
+- **FCVC**: Frekuensi konsumsi sayuran dalam makanan harian `(Diskrit: 1-3)`, angka mungkin mewakili sedikit/tidak ada, sedang dan tinggi.
+- **NCP**: Jumlah makanan utama per hari `(Kontinu: 1-4)`.
+- **CAEC**: Kebiasaan ngemil di antara waktu makan `(Kategorikal: no, sometimes, frequently, always)`.
+- **SMOKE**: Apakah merokok? `(Biner: yes/no)`.
+- **CH2O**: Konsumsi air harian `(Kontinu: 1-3 liter)`.
+- **SCC**: Monitor kalori harian yang dikonsumsi `(Biner: yes/no)`.
+- **FAF**: Frekuensi aktivitas fisik `(Kontinu: 0-3)`, angka mungkin mewakili tidak ada, jarang, sering dan selalu.
+- **TUE**: Waktu yang dihabiskan untuk perangkat teknologi per hari `(Diskrit: 0-2)`, angka mungkin mewakili sedikit/tidak ada, sedang dan tinggi.
+- **CALC**: Frekuensi konsumsi alkohol `(Kategorikal: no, sometimes, frequently, always)`.
+- **MTRANS**: Moda transportasi utama yang digunakan `(Kategorikal: Public_Transportation, Walking, Automobile, Motorbike, Bike)`.
+- **NObeyesdad**: Label target yang menunjukkan tingkat obesitas `(Kategorikal: Insufficient_Weight, Normal_Weight, Overweight_Level_I, Overweight_Level_II, Obesity_Type_I, Obesity_Type_II, dan Obesity_Type_III)`:
 
 ### Tahapan Pemahaman Data
 1. Tahapan pertama adalah melakukan Exploratory Data Analisis menggunakan `.info()` untuk menampilkan ringkasan informasi struktur dataset berupa tipe data dan jumlah dataset, kemudian melakukan metode statistik deskriptif dari kolom numerik dengan fungsi `.describe()` untuk mengetahui sebaran data dan gambaran distribusi data, selanjutnya menampilkan daftar nilai unik (kategori) pada setiap fitur kategorikal untuk memahami variasi data dari tiap kategori.
    
-![image](https://github.com/user-attachments/assets/e3d33cf4-41ae-499e-9850-76d31433105f)
-![image](https://github.com/user-attachments/assets/ddec28e4-813c-421b-816d-19202204c3d0)
-![image](https://github.com/user-attachments/assets/b93ba1af-b814-4134-9690-28b3eea7bb7d)
+      ![image](https://github.com/user-attachments/assets/e3d33cf4-41ae-499e-9850-76d31433105f)
+      ![image](https://github.com/user-attachments/assets/ddec28e4-813c-421b-816d-19202204c3d0)
+      ![image](https://github.com/user-attachments/assets/b93ba1af-b814-4134-9690-28b3eea7bb7d)
 
 2. Tahapan selanjutnya adalah melakukan EDA sebagai pertimbangan apa yang harus ditangani pada tahapan preprocessing nantinya meliputi pengecekan jumlah nilai yang hilang (missing values) menggunakan `isnan().sum()`, jumlah baris data yang duplikat menggunakan `.duplicated().sum()`, dan pengecekan fitur yang mengandung outliers menggunakan IQR method. Selain itu juga dilakukan visualisasi untuk membantu memahami bagaimana distribusi data kategorikal dan numerikal serta sebaran data untuk visualisasi statistik maupun outliers dari data. Kemudian yang terakhir yaitu melakukan pengecekan fitur redundan dan korelasi fitur dengan target menggunakan visualisasi heatmap correlation untuk mengetahui fitur mana yang berguna untuk model nantinya.
 
-![image](https://github.com/user-attachments/assets/847e88f0-d665-4392-8d57-39dcf323e724)
-![image](https://github.com/user-attachments/assets/a90e2696-0114-4341-be6f-1a9df4dd5728)
-![image](https://github.com/user-attachments/assets/97704200-0be1-43c6-913e-cf8d6edacf71)
-![image](https://github.com/user-attachments/assets/d16d6ab8-8fff-42f5-8a35-e592dbda5516)
-![image](https://github.com/user-attachments/assets/9617f1f9-5361-40b3-91ec-c158ae2fd80a)
+      ![image](https://github.com/user-attachments/assets/847e88f0-d665-4392-8d57-39dcf323e724)
+      ![image](https://github.com/user-attachments/assets/a90e2696-0114-4341-be6f-1a9df4dd5728)
+      ![image](https://github.com/user-attachments/assets/97704200-0be1-43c6-913e-cf8d6edacf71)
+      ![image](https://github.com/user-attachments/assets/d16d6ab8-8fff-42f5-8a35-e592dbda5516)
+      ![image](https://github.com/user-attachments/assets/9617f1f9-5361-40b3-91ec-c158ae2fd80a)
 ![image](https://github.com/user-attachments/assets/4e9d4009-3039-45fe-98d5-bb228b445f7e)
 
-## Data Preparation
-Pada bagian ini Anda menerapkan dan menyebutkan teknik data preparation yang dilakukan. Teknik yang digunakan pada notebook dan laporan harus berurutan.
+Pada Tahapan diketahui bahwa beberapa fitur seperti age dan NCP memiliki outliers, terdapat data duplicate yang perlu ditangani, tidak ada missing value, distribusi target sudah cukup seimbang antara kelasnya. Pada korelasi fitur numerikal tidak ada fitur yang multikolinearitas. **Jadi fokus pembersihan data adalah menghapus data duplikat dan mengurangi outliers saja**. Dilihat dari heatmap korelasi, fitur dengan korelasi positif tertinggi dengan target adalah weight, age, FAVC dan family_history_with_overweight. selain itu beberapa fitur memiliki korelasi positif dan negatif yang kecil dalam rentang -0.35 sampai 0.25.
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan proses data preparation yang dilakukan
-- Menjelaskan alasan mengapa diperlukan tahapan data preparation tersebut.
+## Data Preparation
+Data preparation atau data preprocessing adalah tahapan penting dalam proses analisis data dan machine learning. Tanpa preprocessing yang baik, data yang kotor, tidak lengkap, atau tidak konsisten dapat menyebabkan hasil analisis yang salah, model yang kurang akurat, dan keputusan yang tidak tepat. Oleh karena itu, tahapan preprocessing diperlukan untuk memastikan data siap dan optimal untuk menghasilkan insight dan model yang berkualitas. Berdasarkan hasil Exploratory Data Analysis tadi terdapat beberapa hal yang harus dilakukan:
+1. **Membersihkan data duplikat**, Pada tahapan sebelumnya telah dilakukan pengecekan jumlah data duplikat yang terdeteksi sebanyak 24 baris. Oleh karena itu, dilakukan penghapusan baris data yang terdeteksi sebagai duplikat dengan tetap mempertahankan satu data asli yang valid. Tujuannya adalah untuk menghindari bias dalam pelatihan model, menjaga akurasi evaluasi, serta mengoptimalkan efisiensi komputasi dan kualitas distribusi data.
+
+      ![image](https://github.com/user-attachments/assets/cf2f1334-1fcb-41e6-a144-6aec6ed5befd)
+      ![image](https://github.com/user-attachments/assets/b54c93d7-428f-4a50-bcb1-2d00990c4631)
+
+2. **Menangani data outliers**, Pada tahapan sebelumnya, data outliers telah dideteksi menggunakan metode Interquartile Range (IQR) yang bekerja berdasarkan perhitungan nilai-nilai yang berada di luar rentang `[Q1 − 1.5 × IQR, Q3 + 1.5 × IQR]` di mana Q1 dan Q3 adalah kuartil pertama dan ketiga dari distribusi data. Outliers terlihat dominan pada fitur Age dan NCP, namun hal tersebut merepresentasikan variasi alami dari data sehingga penanganannya tidak dapat dilakukan secara langsung melalui penghapusan atau capping. Sebagai solusi maka dilakukan log transform pada fitur **Age** untuk mengurangi skewness dan membatasi dominasi nilai ekstrem sehingga distribusi menjadi lebih seimbang dan model dapat belajar dengan lebih baik. Sementara itu, untuk fitur **NCP**, nilai outlier akan dibiarkan saja karena nilainya merupakan hasil variasi kategorikal alami, korelasinya dengan target sangat rendah dan distribusinya bersifat multimodal sehingga sulit ditangani dengan transformasi sederhana. Selain itu, terdapat satu outlier ekstrem pada fitur **Weight dan Height** yang merupakan nilai maksimum tidak wajar yang akan langsung dihapus agar tidak mempengaruhi nilai statistik keseluruhan seperti rata-rata dan standar deviasi. Adapun transformasi log pada fitur Age menggunakan rumus:
+
+$$
+X_{\text{new}} = log(x+1)
+$$
+
+3. **Data Splitting**, setelah data dirasa bersih, selanjutnya dilakukan tahapan splitting data dengan membaginya menjadi data training dan testing dengan perbandingan 80:20, serta menggunakan metode stratified sampling untuk memastikan proporsi tiap kelas target tetap seimbang pada kedua subset data. Tujuan dari pemisahan ini adalah untuk menghindari overfitting, menilai performa model secara objektif pada data yang belum pernah dilihat, serta memastikan model mampu melakukan generalisasi dengan baik terhadap data baru.
+
+      ![image](https://github.com/user-attachments/assets/66148db1-4455-46ea-a81a-265c86599a6f)
+
+4. **Data Encoding**, pada data terdapat 9 fitur termasuk target yang bertipe data object (kategorikal), data ini tidak bisa langsung di proses oleh model machine learning sehingga perlu dilakukan encoding yaitu mengubah nilai kategori menjadi nilai numerikal. pada kasus ini dilakukan **label encoding** dengan map untuk fitur yang tidak memiliki urutan seperti Gender, FAVC, SCC, SMOKE dan family_history_with_overweight yang hanya terdiri dari 2 unique kategori, **ordinal encoding** menggunakan map untuk fitur berbasis frekuensi seperti CAEC dan CALC, dan **one-hot encoding** untuk fitur tanpa urutan dengan dengan multikelas seperti MTRANS yang terpecah menjadi MTRANS_Public_Transportation, MTRANS_Automobile, MTRANS_Walking, MTRANS_Motorbike dan MTRANS_Bike. serta **label encoding** dengan map untuk target tingkat obesitas (NObeyesdad). Encoding dilakukan pada data training dan testing yang dihasilkan setelah melalui tahapan data splitting hal ini dilakukan agar mencegah kebocoran data dan memperkuat generalisasi data baru.
+   
+5. **Data Scaling**, fitur numerikal yang ada dalam dataset masih dalam rentang yang berbeda-beda sehingga perlu dibuat seragam melalui proses scaling, Meskipun model ensemble seperti Random Forest dan Gradient Boosting yang digunakan dalam penelitian ini tidak bergantung pada skala fitur karena tidak menggunakan pendekatan berbasis jarak namun proses scaling tetap dilakukan untuk menjaga konsistensi preprocessing, mempermudah integrasi antar model, serta mencegah dominasi fitur dengan skala besar dalam tahap seleksi atau eksplorasi fitur. Pada penelitian ini menggunakan metode MinMax Scaling, yaitu teknik penskalaan yang mengubah nilai fitur ke dalam rentang 0 hingga 1, teknik ini dipilih karena sederhana, tidak mengubah distribusi asli data secara signifikan, dan cocok untuk menjaga proporsi nilai dalam fitur yang memiliki skala berbeda.. Rumus MinMax Scaling adalah:
+
+$$
+X_{\text{scaled}} = \frac{X - X_{\text{min}}}{X_{\text{max}} - X_{\text{min}}}
+$$
+
+   dimana :
+   - $` X `$ adalah nilai original.
+   - $` X_{\text{min}} `$ dan $` X_{\text{max}} `$ adalah nilai minimum dan maksimum dari fitur.
+
+Setelah selesai melakukan semua tahapan ini, data akhirnya siap digunakan untuk melatih model machine learning.
 
 ## Modeling
 Tahapan ini membahas mengenai model machine learning yang digunakan untuk menyelesaikan permasalahan. Anda perlu menjelaskan tahapan dan parameter yang digunakan pada proses pemodelan.
