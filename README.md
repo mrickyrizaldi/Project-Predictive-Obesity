@@ -42,16 +42,31 @@ Tujuan dari proyek ini adalah untuk mengembangkan model klasifikasi tingkat obes
 - **Solusi 2:** Menguji coba beberapa algoritma model machine learning, dalam hal ini penelitian akan fokus menggunakan model ensemble yang telah terbukti memiliki akurasi yang baik berdasarkan penelitian terkait yaitu memanfaatkan algoritma Random Forest dan Boosting Algorithm. Kemudian akan dilakukan evaluasi secara menyeluruh menggunakan metrik akurasi sebagai pembanding utama yang mengukur persentase prediksi benar dibandingkan total sampel serta precision, recall, dan F1-Score untuk metrik tambahan. Selain itu digunakan juga classification reports untuk memberikan detail metrik untuk setiap kelas yang diprediksi dan confusion matrix untuk menunjukkan jumlah prediksi benar dan salah untuk setiap kelas. Model dengan hasil evaluasi terbaik akan dipilih sebagai baseline model.
 - **Solusi 3:** Model yang dihasilkan pada tahap modeling belum tentu optimal sehingga perlu dilakukan proses Hyperparameter tuning untuk mendapatkan parameter basemodel yang terbaik sehingga dapat meningkatkan performa model terutama berdasarkan metrik akurasinya  dengan menggunakan teknik Random Search agar mengurangi waktu pencarian parameter optimal. Setelah parameter optimal didapat akan dilakukan training ulang dan dilakukan evaluasi menyeluruh dan jika terbukti meningkatkan akurasi dibandingkan basemodel, maka model dengan parameter hasil fine tuning akan dipilih menjadi model akhir.
 
-
 ## Data Understanding
-Paragraf awal bagian ini menjelaskan informasi mengenai data yang Anda gunakan dalam proyek. Sertakan juga sumber atau tautan untuk mengunduh dataset. Contoh: [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Restaurant+%26+consumer+data).
+Dataset yang digunakan pada proyek klasifikasi tingkat obesitas ini terdiri dari 2.111 baris data, 17 fitur, dan 1 target berisi 7 kelas yang dikumpulkan dari individu yang berasal dari negara Mexico, Peru, dan Kolombia. Dataset ini mencakup data terkait kebiasaan makan, aktivitas fisik, serta kondisi fisik pengguna. Sekitar 23% data dikumpulkan langsung dari pengguna melalui platform daring, sedangkan 77% lainnya dihasilkan secara sintetis menggunakan teknik oversampling SMOTE melalui Weka. Dataset ini dapat diakses melalui tautan berikut: [Obesity Levels Dataset - Kaggle](https://www.kaggle.com/datasets/fatemehmehrparvar/obesity-levels)
 
-Selanjutnya uraikanlah seluruh variabel atau fitur pada data. Sebagai contoh:  
+### Variabel-variabel pada Obesity Levels Dataset adalah sebagai berikut:
+- **Gender**: Jenis kelamin responden (Kategorikal: Male/Female).
+- **Age**: Usia responden dalam tahun (Kontinu).
+- **Height**: Tinggi badan dalam meter (Kontinu).
+- **Weight**: Berat badan dalam kilogram (Kontinu).
+- **family_history_with_overweight**: Riwayat keluarga dengan kelebihan berat badan (Biner: yes/no).
+- **FAVC**: Sering mengonsumsi makanan berkalori tinggi? (Biner: yes/no).
+- **FCVC**: Frekuensi konsumsi sayuran dalam makanan harian (Diskrit: 1-3), angka mungkin mewakili sedikit/tidak ada, sedang dan tinggi.
+- **NCP**: Jumlah makanan utama per hari (Kontinu: 1-4).
+- **CAEC**: Kebiasaan ngemil di antara waktu makan (Kategorikal: no, sometimes, frequently, always).
+- **SMOKE**: Apakah merokok? (Biner: yes/no).
+- **CH2O**: Konsumsi air harian (Kontinu: 1-3 liter).
+- **SCC**: Monitor kalori harian yang dikonsumsi (Biner: yes/no).
+- **FAF**: Frekuensi aktivitas fisik (Kontinu: 0-3), angka mungkin mewakili tidak ada, jarang, sering dan selalu.
+- **TUE**: Waktu yang dihabiskan untuk perangkat teknologi per hari (Diskrit: 0-2), angka mungkin mewakili sedikit/tidak ada, sedang dan tinggi.
+- **CALC**: Frekuensi konsumsi alkohol (Kategorikal: no, sometimes, frequently, always).
+- **MTRANS**: Moda transportasi utama yang digunakan (Kategorikal: Public_Transportation, Walking, Automobile, Motorbike, Bike).
+- **NObeyesdad**: Label target yang menunjukkan tingkat obesitas (Kategorikal: Insufficient_Weight, Normal_Weight, Overweight_Level_I, Overweight_Level_II, Obesity_Type_I, Obesity_Type_II, dan Obesity_Type_III):
 
-### Variabel-variabel pada Restaurant UCI dataset adalah sebagai berikut:
-- accepts : merupakan jenis pembayaran yang diterima pada restoran tertentu.
-- cuisine : merupakan jenis masakan yang disajikan pada restoran.
-- dst
+### Tahapan Pemahaman Data
+![image](https://github.com/user-attachments/assets/ddec28e4-813c-421b-816d-19202204c3d0)
+
 
 **Rubrik/Kriteria Tambahan (Opsional)**:
 - Melakukan beberapa tahapan yang diperlukan untuk memahami data, contohnya teknik visualisasi data atau exploratory data analysis.
