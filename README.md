@@ -43,7 +43,7 @@ Tujuan dari proyek ini adalah untuk mengembangkan model klasifikasi tingkat obes
 - **Solusi 3:** Model yang dihasilkan pada tahap modeling belum tentu optimal sehingga perlu dilakukan proses Hyperparameter tuning untuk mendapatkan parameter basemodel yang terbaik sehingga dapat meningkatkan performa model terutama berdasarkan metrik akurasinya  dengan menggunakan teknik Random Search agar mengurangi waktu pencarian parameter optimal. Setelah parameter optimal didapat akan dilakukan training ulang dan dilakukan evaluasi menyeluruh dan jika terbukti meningkatkan akurasi dibandingkan basemodel, maka model dengan parameter hasil fine tuning akan dipilih menjadi model akhir.
 
 ## Data Understanding
-Dataset yang digunakan pada proyek klasifikasi tingkat obesitas ini terdiri dari 2.111 baris data, 17 fitur, dan 1 target berisi 7 kelas yang dikumpulkan dari individu yang berasal dari negara Mexico, Peru, dan Kolombia. Dataset ini mencakup data terkait kebiasaan makan, aktivitas fisik, serta kondisi fisik pengguna. Sekitar 23% data dikumpulkan langsung dari pengguna melalui platform daring, sedangkan 77% lainnya dihasilkan secara sintetis menggunakan teknik oversampling SMOTE melalui Weka. Dataset ini dapat diakses melalui tautan berikut: [Obesity Levels Dataset - Kaggle](https://www.kaggle.com/datasets/fatemehmehrparvar/obesity-levels)
+Dataset yang digunakan pada proyek klasifikasi tingkat obesitas ini terdiri dari 2.111 baris data, 17 fitur, dan 1 target berisi 7 kelas yang dikumpulkan dari individu yang berasal dari negara Mexico, Peru, dan Kolombia. Dataset ini mencakup data terkait kebiasaan makan, aktivitas fisik, serta kondisi fisik pengguna. Sekitar 23% data dikumpulkan langsung dari pengguna melalui platform daring, sedangkan 77% lainnya dihasilkan secara sintetis menggunakan teknik oversampling SMOTE melalui Weka. Dataset ini dapat diakses melalui tautan berikut: [Obesity Levels - Kaggle Dataset](https://www.kaggle.com/datasets/fatemehmehrparvar/obesity-levels)
 
 ### Variabel-variabel pada Obesity Levels Dataset adalah sebagai berikut:
 - **Gender**: Jenis kelamin responden (Kategorikal: Male/Female).
@@ -65,11 +65,20 @@ Dataset yang digunakan pada proyek klasifikasi tingkat obesitas ini terdiri dari
 - **NObeyesdad**: Label target yang menunjukkan tingkat obesitas (Kategorikal: Insufficient_Weight, Normal_Weight, Overweight_Level_I, Overweight_Level_II, Obesity_Type_I, Obesity_Type_II, dan Obesity_Type_III):
 
 ### Tahapan Pemahaman Data
+1. Tahapan pertama adalah melakukan Exploratory Data Analisis menggunakan `.info()` untuk menampilkan ringkasan informasi struktur dataset berupa tipe data dan jumlah dataset, kemudian melakukan metode statistik deskriptif dari kolom numerik dengan fungsi `.describe()` untuk mengetahui sebaran data dan gambaran distribusi data, selanjutnya menampilkan daftar nilai unik (kategori) pada setiap fitur kategorikal untuk memahami variasi data dari tiap kategori.
+   
+![image](https://github.com/user-attachments/assets/e3d33cf4-41ae-499e-9850-76d31433105f)
 ![image](https://github.com/user-attachments/assets/ddec28e4-813c-421b-816d-19202204c3d0)
+![image](https://github.com/user-attachments/assets/b93ba1af-b814-4134-9690-28b3eea7bb7d)
 
+2. Tahapan selanjutnya adalah melakukan EDA sebagai pertimbangan apa yang harus ditangani pada tahapan preprocessing nantinya meliputi pengecekan jumlah nilai yang hilang (missing values) menggunakan `isnan().sum()`, jumlah baris data yang duplikat menggunakan `.duplicated().sum()`, dan pengecekan fitur yang mengandung outliers menggunakan IQR method. Selain itu juga dilakukan visualisasi untuk membantu memahami bagaimana distribusi data kategorikal dan numerikal serta sebaran data untuk visualisasi statistik maupun outliers dari data. Kemudian yang terakhir yaitu melakukan pengecekan fitur redundan dan korelasi fitur dengan target menggunakan visualisasi heatmap correlation untuk mengetahui fitur mana yang berguna untuk model nantinya.
 
-**Rubrik/Kriteria Tambahan (Opsional)**:
-- Melakukan beberapa tahapan yang diperlukan untuk memahami data, contohnya teknik visualisasi data atau exploratory data analysis.
+![image](https://github.com/user-attachments/assets/847e88f0-d665-4392-8d57-39dcf323e724)
+![image](https://github.com/user-attachments/assets/a90e2696-0114-4341-be6f-1a9df4dd5728)
+![image](https://github.com/user-attachments/assets/97704200-0be1-43c6-913e-cf8d6edacf71)
+![image](https://github.com/user-attachments/assets/d16d6ab8-8fff-42f5-8a35-e592dbda5516)
+![image](https://github.com/user-attachments/assets/9617f1f9-5361-40b3-91ec-c158ae2fd80a)
+![image](https://github.com/user-attachments/assets/4e9d4009-3039-45fe-98d5-bb228b445f7e)
 
 ## Data Preparation
 Pada bagian ini Anda menerapkan dan menyebutkan teknik data preparation yang dilakukan. Teknik yang digunakan pada notebook dan laporan harus berurutan.
