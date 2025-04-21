@@ -116,73 +116,129 @@ Setelah selesai melakukan semua tahapan ini, data akhirnya siap digunakan untuk 
 ## Modeling
 Tahapan ini membahas mengenai model machine learning yang digunakan untuk menyelesaikan permasalahan klasifikasi obesitas berdasarkan data gaya hidup dan kondisi fisik pengguna. Penelitian ini menggunakan dua model ensemble yaitu Random Forest dan Gradient Boosting, untuk membandingkan performa masing-masing dan menentukan model terbaik yang akan digunakan sebagai solusi.
 
-**Inisialiasi Model**  
+### 1. Inisialiasi Model
 Dua model utama yang digunakan dalam eksperimen ini adalah RandomForestClassifier dan GradientBoostingClassifier dari pustaka scikit-learn. Inisialisasi awal dilakukan dengan parameter default sebelum dilakukan optimasi. Berikut ini adalah algoritma model yang digunakan dengan parameter yang diatur secara default serta kelebihan dan kekurangan dari masing-masing algoritma:
 1. **Random Forest** adalah algoritma ensemble learning yang digunakan untuk tugas klasifikasi dan regresi. Ia bekerja dengan membangun banyak pohon keputusan (decision trees) selama proses pelatihan, lalu menggabungkan hasil prediksi dari masing-masing pohon untuk menghasilkan output akhir yang lebih akurat dan stabil.
-   - Parameter Utama:  
-      `n_estimators: 100` (Jumlah pohon dalam hutan)  
-      `max_depth: None` (Kedalaman maksimum pohon)  
-      `max_features: 'sqrt'` (Jumlah maksimum fitur yang dipertimbangkan saat split)  
-      `min_samples_split: 2`  (Minimal jumlah sampel untuk memisahkan node)  
-      `min_samples_leaf: 1` (Jumlah minimal sampel di setiap daun)  
-      `bootstrap: True` (bootstrap sampling untuk menciptakan keragaman antar pohon)  
+   - Parameter Utama:   
+         `n_estimators: 100` (Jumlah pohon dalam hutan)  
+         `max_depth: None` (Kedalaman maksimum pohon)  
+         `max_features: 'sqrt'` (Jumlah maksimum fitur yang dipertimbangkan saat split)  
+         `min_samples_split: 2`  (Minimal jumlah sampel untuk memisahkan node)  
+         `min_samples_leaf: 1` (Jumlah minimal sampel di setiap daun)  
+         `bootstrap: True` (bootstrap sampling untuk menciptakan keragaman antar pohon)  
    - Kelebihan: Mampu menangani data non-linear dan kompleks, tahan terhadap overfitting, cocok untuk klasifikasi multi-kelas, dan menyediakan informasi pentingnya fitur.
    - Kekurangan: Kurang interpretatif, proses pelatihan lebih lambat, dan membutuhkan tuning parameter agar performa optimal.
 
 2. **Gradient Boosting** adalah algoritma ensemble learning yang membangun model secara bertahap dari banyak pohon keputusan lemah (shallow trees). Setiap pohon baru dilatih untuk memperbaiki kesalahan dari pohon sebelumnya, dengan cara meminimalkan fungsi loss menggunakan pendekatan gradien. Proses ini membuat model menjadi sangat kuat meskipun dimulai dari pohon-pohon yang sederhana.
-   - Parameter Utama:
-      `n_estimators: 100` (Jumlah pohon lemah yang akan dibangun secara berurutan)  
-      `learning_rate: 0.1` (Seberapa besar kontribusi tiap pohon terhadap model akhir)  
-      `max_depth: 3` (Kedalaman maksimum tiap pohon lemah)  
-      `subsample: 1.0` (Proporsi sampel yang digunakan untuk melatih tiap pohon)  
-      `min_samples_split: 2` (Jumlah minimum sampel untuk membagi node)  
-      `min_samples_leaf: 1` (Jumlah minimum sampel pada daun)  
+   - Parameter Utama:  
+         `n_estimators: 100` (Jumlah pohon lemah yang akan dibangun secara berurutan)  
+         `learning_rate: 0.1` (Seberapa besar kontribusi tiap pohon terhadap model akhir)  
+         `max_depth: 3` (Kedalaman maksimum tiap pohon lemah)  
+         `subsample: 1.0` (Proporsi sampel yang digunakan untuk melatih tiap pohon)  
+         `min_samples_split: 2` (Jumlah minimum sampel untuk membagi node)  
+         `min_samples_leaf: 1` (Jumlah minimum sampel pada daun)  
    - Kelebihan: Sangat akurat untuk tugas klasifikasi dan regresi, mampu menangkap hubungan non-linear kompleks, dan fleksibel dalam penggunaan fungsi loss serta 
      menyediakan informasi pentingnya fitur.
    - Kekurangan: Proses pelatihan cenderung lebih lambat dan rentan terhadap overfitting jika tidak dituning dengan baik serta lebih sensitif terhadap outlier dan noise 
      dibanding Random Forest.
 
-**Model Terbaik**  
+### 2. Penentuan Model Terbaik
 Berdasarkan hasil pelatihan model terpisah menggunakan data pelatihan (X_train, y_train) yang telah diproses dan di-split sebelumnya yang kemudian dievaluasi menggunakan data uji (X_test, y_test) dengan metrik evaluasi seperti akurasi, precision, recall, dan F1-score serta classification report dan confusion matrix menunjukan model default dari Gradient Boosting memiliki performa paling baik dimana:
 1. Performa metrik yang lebih baik dengan akurasi, precision, recall, dan F1 score sebesar 0.97 pada data testing dan 1.0 pada data training, Walaupun menunjukkan adanya sedikit potensi overfitting namun hanya memiliki sedikit kesalahan dalam prediksi (kesalahan tidak jauh antar multi-kelas). dibandingkan dengan model random forest yang hanya sebesar 0.95 pada data testing dan 1.0 pada training dan kesalahan prediksi yang jauh dari kelasnya, model GDB masih lebih unggul
 2. Walaupun memiliki waktu pelatihan yang sedikit lebih lama yaitu sekitar 11 detik dibanding Random Forest yang hanya sekitar 1 detik, namun perbedaan ini tidak terlalu berdampak sehigga masalah waktu tidak akan menjadi pertimbangan dalam kasus ini.
 
 Berdasarkan alasan diatas menjadikan model Gradient Boosting sebagai pilihan yang cocok untuk kasus ini. Walaupun model masih mengalami potensi overfitting namun masih bisa diatasi dengan melakukan fine tuning pada model Gradient Boosting yang dipilih untuk membuat model semakin akurat dengan parameter optimal.
 
-**Tahapan Fine Tuning**  
+### 3. Tahapan Fine Tuning  
 Model Gradient Boosting yang menunjukkan performa awal lebih baik kemudian dituning menggunakan RandomizedSearchCV untuk meningkatkan performanya lebih lanjut. Adapun parameter yang akan dituning adalah seperti berikut:
 
-      ![image](https://github.com/user-attachments/assets/0f152f90-8e0a-4625-a4c1-e0599686e1ad)
+   ![image](https://github.com/user-attachments/assets/0f152f90-8e0a-4625-a4c1-e0599686e1ad)
       
-Menggunakan `n_iter = 100` yang akan mencoba 100 kombinasi parameter berbeda secara acak, `cv=5` yang membagi data menjadi 5 bagian dan akan diuji secara bergantian sehingga total fits adalah `5 folds × 100 candidates = 500 fits` yang artinya model dilatih dan diuji sebanyak 500 kali. Metrik akurasi digunanakan sebagai metrik evaluasi untuk memilih model terbaik selama pencarian parameter. **Random Search** dipilih karena memungkinkan pencarian ruang hyperparameter yang lebih luas secara lebih efisien dalam sisi waktu dibandingkan Grid Search karena tidak semua kombinasi diuji, melainkan hanya sebagian acak. Dalam Random Search, parameter-parameter dicoba secara acak dalam ruang parameter yang telah ditentukan, sehingga meskipun jumlah iterasi lebih sedikit, peluang untuk menemukan kombinasi yang optimal tetap tinggi. sehingga dihasilkan parameter optimal yaitu:
-`Best Params: {'learning_rate': np.float64(0.1834840422988522), 'max_depth': 8, 'max_features': None, 'min_samples_leaf': 9, 'min_samples_split': 11, 'n_estimators': 112, 'subsample': np.float64(0.9909204441552655)}` kemudian dilakukan training ulang dengan parameter yang sudah didapat dan diperoleh akurasi sebesar 0.98 (meningkat sebesar 0.1 dibanding model default) dan menghasilkan prediksi yang semakin membaik.
+Menggunakan `n_iter = 100` yang akan mencoba 100 kombinasi parameter berbeda secara acak, `cv=5` yang membagi data menjadi 5 bagian dan akan diuji secara bergantian sehingga total fits adalah `5 folds × 100 candidates = 500 fits` yang artinya model dilatih dan diuji sebanyak 500 kali. Metrik akurasi digunanakan sebagai metrik evaluasi untuk memilih model terbaik selama pencarian parameter. **Random Search** dipilih karena memungkinkan pencarian ruang hyperparameter yang lebih luas secara lebih efisien dalam sisi waktu dibandingkan Grid Search karena tidak semua kombinasi diuji, melainkan hanya sebagian acak. Dalam Random Search, parameter-parameter dicoba secara acak dalam ruang parameter yang telah ditentukan, sehingga meskipun jumlah iterasi lebih sedikit, peluang untuk menemukan kombinasi yang optimal tetap tinggi. sehingga dihasilkan parameter optimal yaitu:  
+`Best Params: {'learning_rate': np.float64(0.1834840422988522), 'max_depth': 8, 'max_features': None, 'min_samples_leaf': 9, 'min_samples_split': 11, 'n_estimators': 112, 'subsample': np.float64(0.9909204441552655)}`   
+kemudian dilakukan training ulang dengan parameter yang sudah didapat dan diperoleh akurasi sebesar 0.98 (meningkat sebesar 0.1 dibanding model default) dan menghasilkan prediksi yang semakin membaik.
 
-**Tahapan Feature Selection**
+### 4. Tahapan Feature Selection
 Karena kemungkinan model masih membaca fitur yang tidak terlalu berkaitan yang ditunjukkan dengan potensi overfitting sehingga langkah fine tuning saja tidak cukup maka selanjutnya adalah perlu dilakukan seleksi fitur. Seleksi fitur dilakukan berdasarkan feature importance yang disediakan oleh model Gradient Boosting. Feature importance adalah ukuran yang menunjukkan seberapa penting setiap fitur dalam membuat keputusan yang tepat dalam model. Fitur yang memiliki nilai importance lebih tinggi dianggap lebih penting dan lebih berkontribusi pada kemampuan model dalam melakukan prediksi yang akurat, sedangkan fitur dengan nilai importance rendah dapat diabaikan. Melalui proses ini, fitur-fitur yang tidak relevan atau kurang berpengaruh terhadap hasil model akan dihilangkan, yang membantu dalam mengurangi kompleksitas model, meningkatkan kecepatan pelatihan model, dan meningkatkan interpretabilitas model.
       
-      ![image](https://github.com/user-attachments/assets/a5df5f00-33f9-4794-8ea7-5c4b488e4361)
+   ![image](https://github.com/user-attachments/assets/a5df5f00-33f9-4794-8ea7-5c4b488e4361)
 
 Terlihat hanya 15 fitur yang memiliki importance terhadap model sehingga akan dilakukan pemilihan kepada 15 fitur tersebut dan karena fitur yang tidak memiliki importance masih memiliki alasan logis untuk dihilangkan seperti kendaraan yang tidak memerlukan aktifitas fisik yaitu mobil, public_trans, motor dan sepeda serta fitur smoking yang mungkin kurang relevan terhadap obesity. Selanjutnya dilakukan training ulang menggunakan parameter hasil fine tuning dan fitur yang sudah diseleksi hasilnya cukup baik dimana model dengan fine tuning dan feature selection berdasarkan importance fitur menunjukkan akurasi paling maksimum yaitu sebesar 0.99 meningkat dibanding model fine-tuning saja yang hanya 0.98. Hal ini menunjukan model semakin mengurangi potensi overfitting dan menghasilkan prediksi yang lebih baik.
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan kelebihan dan kekurangan dari setiap algoritma yang digunakan.
-- Jika menggunakan satu algoritma pada solution statement, lakukan proses improvement terhadap model dengan hyperparameter tuning. **Jelaskan proses improvement yang dilakukan**.
-- Jika menggunakan dua atau lebih algoritma pada solution statement, maka pilih model terbaik sebagai solusi. **Jelaskan mengapa memilih model tersebut sebagai model terbaik**.
-
 ## Evaluation
-Pada bagian ini anda perlu menyebutkan metrik evaluasi yang digunakan. Lalu anda perlu menjelaskan hasil proyek berdasarkan metrik evaluasi yang digunakan.
+Dalam proyek klasifikasi obesitas ini, digunakan beberapa metrik evaluasi untuk mengukur performa model machine learning, yaitu akurasi, precision, recall, dan F1-score. Metrik-metrik ini dipilih karena sesuai dengan tujuan dari proyek, yaitu mengklasifikasikan kategori obesitas dengan tingkat kesalahan yang seminimal mungkin, terutama dalam konteks data multi-kelas.
 
-Sebagai contoh, Anda memiih kasus klasifikasi dan menggunakan metrik **akurasi, precision, recall, dan F1 score**. Jelaskan mengenai beberapa hal berikut:
-- Penjelasan mengenai metrik yang digunakan
-- Menjelaskan hasil proyek berdasarkan metrik evaluasi
+### Penjelasan Metrik Evaluasi
+1. **Accuracy**  
+   Akurasi mengukur seberapa banyak prediksi yang benar dari keseluruhan prediksi yang dilakukan, dalam konteks ini, akurasi menunjukkan persentase prediksi yang benar terhadap total prediksi 
+   yang dibuat model untuk setiap kelas obesitas. Formula untuk akurasi adalah:
 
-Ingatlah, metrik evaluasi yang digunakan harus sesuai dengan konteks data, problem statement, dan solusi yang diinginkan.
+   $$\text{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN}$$
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan formula metrik dan bagaimana metrik tersebut bekerja.
+   Di mana TP = True Positive, TN = True Negative, FP = False Positive, dan FN = False Negative.
+   Metrik ini cocok digunakan saat distribusi kelas cukup seimbang dan kesalahan di semua kelas memiliki dampak yang sebanding dan jika ingin memperoleh gambaran umum seberapa baik model dalam 
+   memprediksi kelas yang benar.
 
-**---Ini adalah bagian akhir laporan---**
+2. **Precision**
+   Precision mengukur seberapa banyak prediksi yang benar dari semua prediksi yang diberi label positif oleh model (dalam hal ini adalah kelas obesitas tertentu). Formula untuk precision adalah:
 
-_Catatan:_
-- _Anda dapat menambahkan gambar, kode, atau tabel ke dalam laporan jika diperlukan. Temukan caranya pada contoh dokumen markdown di situs editor [Dillinger](https://dillinger.io/), [Github Guides: Mastering markdown](https://guides.github.com/features/mastering-markdown/), atau sumber lain di internet. Semangat!_
-- Jika terdapat penjelasan yang harus menyertakan code snippet, tuliskan dengan sewajarnya. Tidak perlu menuliskan keseluruhan kode project, cukup bagian yang ingin dijelaskan saja.
+   $$\text{Precision} = \frac{TP}{TP + FP}$$
+
+   Precision yang tinggi menunjukkan bahwa ketika model memprediksi kelas tertentu, kemungkinan besar prediksi tersebut adalah benar. Cocok untuk konteks di mana false positive perlu 
+   diminimalkan.
+
+3. **Recall**
+   Recall mengukur seberapa banyak kasus positif yang berhasil ditemukan oleh model di antara semua kasus yang seharusnya positif. dalam hal ini menunjukkan seberapa banyak orang yang benar- 
+   benar termasuk dalam kategori obesitas tertentu dapat terdeteksi dengan benar oleh model. Formula untuk recall adalah:
+
+   $$\text{Recall} = \frac{TP}{TP + FN}$$
+
+   Recall tinggi berarti model mampu menangkap hampir semua kasus yang benar-benar positif.Cocok untuk konteks di mana false negative perlu diminimalkan.
+
+4. **F1-Score**
+   F1-score adalah rata-rata harmonis dari precision dan recall yang memberikan gambaran yang lebih seimbang jika terjadi trade-off antara keduanya. Formula F1-score adalah:
+
+   $$\text{F1 Score} = 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}$$
+
+   Nilai F1-score yang tinggi berarti model dapat menangkap banyak kasus obesitas (recall) dengan sedikit kesalahan prediksi (precision). F1-Score berguna ketika ada ketidakseimbangan antara 
+   precision dan recall dan memerlukan metrik tunggal untuk menilai keseimbangan antara keduanya
+
+**Alat Bantu Visualisasi Metrik**
+1. **Confusion matrix** adalah alat evaluasi yang sering digunakan dalam klasifikasi untuk memvisualisasikan kinerja model dengan membandingkan prediksi model terhadap nilai sebenarnya (true values). Matrix ini menunjukkan bagaimana model mengklasifikasikan setiap kelas dalam masalah klasifikasi, terutama untuk memahami kesalahan yang terjadi antara kelas-kelas.
+2. **Classification report** adalah ringkasan dari berbagai metrik evaluasi yang digunakan untuk menilai performa model dalam masalah klasifikasi mencakup metrik-metrik seperti Precision, Recall, F1-Score, dan Support untuk setiap kelas yang ada dalam dataset. terdapat ringkasan macro average yang merupakan rata-rata metrik (precision, recall, dan F1) untuk semua kelas tanpa memperhitungkan ketidakseimbangan jumlah sampel antar kelas dan weighted average yang merupakan rata-rata metrik dengan mempertimbangkan jumlah sampel untuk setiap kelas, sehingga kelas yang lebih besar memiliki pengaruh lebih besar terhadap hasil rata-rata.
+
+### Hasil Evaluasi Proyek
+Evaluasi dilakukan terhadap dua model, yaitu Random Forest dan Gradient Boosting, baik pada parameter default maupun setelah dilakukan hyperparameter tuning dan feature selection.
+1. Evaluasi Model Default
+
+   ![image](https://github.com/user-attachments/assets/7ab3db43-2327-450f-855f-8f3a094f0587)
+   ![image](https://github.com/user-attachments/assets/0da61381-21f0-426f-9e3e-13657b538124)
+   ![image](https://github.com/user-attachments/assets/e696ad5c-2429-4e69-b833-16f8432144cf)
+   ![image](https://github.com/user-attachments/assets/c526127e-8ed2-42c8-b4b1-0b0377e12233)
+
+   Evaluasi awal pada model Random Forest dan Gradient Boosting menunjukkan performa sempurna pada data training (nilai 1.0 di semua metrik), namun menunjukkan potensi overfitting. Pada data 
+   testing, Random Forest memperoleh skor 0.95, sedangkan Gradient Boosting mencatat skor lebih tinggi yaitu 0.97 di semua metrik. Hasil ini menunjukkan bahwa Gradient Boosting lebih stabil 
+   dan generalizable dibandingkan Random Forest. Pada classification report juga akurasi, presisi, recall dan F1-score setiap kelas pada model Gradient Boosting lebih tinggi sehingga secara 
+   keseluruhan, model Gradient Boosting menunjukkan kinerja yang lebih baik dibandingkan Random Forest dalam semua aspek evaluasi, menjadikannya kandidat yang lebih potensial untuk ditingkatkan 
+   lebih lanjut melalui proses hyperparamter tuning.
+   
+2. Evaluasi Setelah Fine Tuning
+
+   ![image](https://github.com/user-attachments/assets/9652977d-1588-46b3-8c4d-4c8cc2efe4b1)
+   ![image](https://github.com/user-attachments/assets/bb13d446-09ca-457f-a3a1-fc76be376902)
+   ![image](https://github.com/user-attachments/assets/6a20b25b-bbce-4e99-9f77-6628f7f2fe3a)
+
+   Evaluasi Gradient Boosting setelah fine tuning juga menunjukkan semua metrik pada data training dengan nilai 1.0 namun hasil testingnya meningkat menjadi 0.98 dari model dengan parameter 
+   default. Pada Classification Reports juga nilai akurasi, presisi, recall, dan F1-score tiap kelas semakin baik dan prediksi salahnya semakin berkurang.
+
+3. Evaluasi Setelah Feature Selection
+
+   ![image](https://github.com/user-attachments/assets/5eb19e06-7628-473a-a012-29095f4d8269)
+   ![image](https://github.com/user-attachments/assets/24363e9c-0bc8-420e-89a6-6f414f2fede2)
+
+   Setelah dilakukan fine tuning, dilakukan juga feature selection dan dapat dilihat pada classification report terdapat peningkatan semua metrik menjadi 0.99 yang semakin meminimalkan 
+   overfitting. selain itu tiap kelas juga semakin baik performa tiap kelasnya.
+
+## Kesimpulan
+Berdasarkan evaluasi yang dilakukan terhadap dua model, Random Forest dan Gradient Boosting, dapat disimpulkan bahwa Gradient Boosting merupakan model dengan performa terbaik untuk menyelesaikan permasalahan klasifikasi obesitas berbasis data gaya hidup dan kondisi fisik. Meskipun kedua model menunjukkan hasil sempurna pada data pelatihan, Gradient Boosting secara konsisten menghasilkan metrik evaluasi yang lebih tinggi dan stabil pada data pengujian, baik dalam kondisi default maupun setelah dilakukan peningkatan melalui fine tuning dan feature selection. Proses hyperparameter tuning pada Gradient Boosting berhasil meningkatkan akurasi dari 0.97 menjadi 0.98, serta meningkatkan nilai precision, recall, dan F1-score pada masing-masing kelas. Peningkatan selanjutnya melalui feature selection menghasilkan akurasi sebesar 0.99 dan kinerja model yang lebih efisien serta minim overfitting. Secara keseluruhan, proses evaluasi menunjukkan bahwa dengan pendekatan bertahap dan komprehensif, performa model dapat ditingkatkan secara signifikan dan menghasilkan prediksi yang lebih akurat serta dapat diandalkan.
+
