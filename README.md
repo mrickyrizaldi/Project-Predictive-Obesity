@@ -114,7 +114,13 @@ $$
 Setelah selesai melakukan semua tahapan ini, data akhirnya siap digunakan untuk melatih model machine learning.
 
 ## Modeling
-Tahapan ini membahas mengenai model machine learning yang digunakan untuk menyelesaikan permasalahan. Anda perlu menjelaskan tahapan dan parameter yang digunakan pada proses pemodelan.
+Tahapan ini membahas mengenai model machine learning yang digunakan untuk menyelesaikan permasalahan klasifikasi obesitas berdasarkan data gaya hidup dan kondisi fisik pengguna. Penelitian ini menggunakan dua model ensemble yaitu Random Forest dan Gradient Boosting, untuk membandingkan performa masing-masing dan menentukan model terbaik yang akan digunakan sebagai solusi.
+
+**Tahapan Proses Pemodelan**
+1. Inisialisasi Model, dua model utama yang digunakan dalam eksperimen ini adalah RandomForestClassifier dan GradientBoostingClassifier dari pustaka scikit-learn. Inisialisasi awal dilakukan dengan parameter default sebelum dilakukan optimasi.
+2. Pelatihan Model, model dilatih menggunakan data pelatihan (X_train, y_train) yang telah diproses dan di-split sebelumnya. Pelatihan dilakukan secara terpisah untuk kedua model.
+3. Evaluasi Model, model dievaluasi menggunakan data uji (X_test, y_test) dengan metrik evaluasi seperti akurasi, precision, recall, dan F1-score. Selain itu, classification report dan confusion matrix digunakan untuk analisis lebih dalam terhadap performa model di setiap kelas obesitas.
+4. Tuning Model Terbaik, Model Gradient Boosting yang menunjukkan performa awal lebih baik kemudian dituning menggunakan RandomizedSearchCV untuk meningkatkan performanya lebih lanjut.
 
 **Rubrik/Kriteria Tambahan (Opsional)**: 
 - Menjelaskan kelebihan dan kekurangan dari setiap algoritma yang digunakan.
