@@ -203,7 +203,7 @@ Dalam proyek klasifikasi obesitas ini, digunakan beberapa metrik evaluasi untuk 
    Nilai F1-score yang tinggi berarti model dapat menangkap banyak kasus obesitas (recall) dengan sedikit kesalahan prediksi (precision). F1-Score berguna ketika ada ketidakseimbangan antara 
    precision dan recall dan memerlukan metrik tunggal untuk menilai keseimbangan antara keduanya
 
-**Alat Bantu Visualisasi Metrik**
+### Alat Bantu Visualisasi Metrik
 1. **Confusion matrix** adalah alat evaluasi yang sering digunakan dalam klasifikasi untuk memvisualisasikan kinerja model dengan membandingkan prediksi model terhadap nilai sebenarnya (true values). Matrix ini menunjukkan bagaimana model mengklasifikasikan setiap kelas dalam masalah klasifikasi, terutama untuk memahami kesalahan yang terjadi antara kelas-kelas.
 2. **Classification report** adalah ringkasan dari berbagai metrik evaluasi yang digunakan untuk menilai performa model dalam masalah klasifikasi mencakup metrik-metrik seperti Precision, Recall, F1-Score, dan Support untuk setiap kelas yang ada dalam dataset. terdapat ringkasan macro average yang merupakan rata-rata metrik (precision, recall, dan F1) untuk semua kelas tanpa memperhitungkan ketidakseimbangan jumlah sampel antar kelas dan weighted average yang merupakan rata-rata metrik dengan mempertimbangkan jumlah sampel untuk setiap kelas, sehingga kelas yang lebih besar memiliki pengaruh lebih besar terhadap hasil rata-rata.
 
